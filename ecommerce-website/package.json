@@ -1,0 +1,22 @@
+{
+    "name": "shopping",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "lint": "npx prettier --check .",
+        "format": "npx prettier --write .",
+        "prepare": "husky"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.7",
+        "prettier": "^3.3.2"
+    },
+    "lint-staged": {
+        "**/*.{js,jsx,ts,tsx,md,html,css,ejs}": "prettier --write ."
+    }
+}

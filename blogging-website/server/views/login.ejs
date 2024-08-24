@@ -1,0 +1,54 @@
+<%- include('partials/header'); -%>
+
+<main>
+    <form id="loginForm" method="POST">
+        <div>
+          <h2>Login</h2>
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <p id="error" style="color: red;"></p>
+</main>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Store the JWT token in localStorage
+                localStorage.setItem('token', result.token);
+                // Redirect to /client/blogs
+                window.location.href = '/client/blogs';
+            } else {
+                document.getElementById('error').textContent = result.error;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('error').textContent = 'An error occurred. Please try again later.';
+        }
+    });
+</script>
+
+<%- include('partials/footer'); -%>
